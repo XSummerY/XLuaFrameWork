@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 1238569758
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: ui/sprite/pic001.jpg.ab
+      Dependencies: {}
