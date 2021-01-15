@@ -1,15 +1,17 @@
 ManifestFileVersion: 0
-CRC: 4275308928
+CRC: 3672677917
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: eebc5889e9aeaafae21be3bfaa3f1282
+    Hash: 7aa54bb5fddd8a4e3184c3513bd46355
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 2ed26e3ad9f6be9c24f85f5f5b54339d
+    Hash: 9e6ad29cbd2df8fbe1a15315db0e51ab
 HashAppended: 0
 ClassTypes:
 - Class: 28
+  Script: {instanceID: 0}
+- Class: 213
   Script: {instanceID: 0}
 Assets:
 - Assets/BuildResources/UI/Sprite/pic001.jpg
