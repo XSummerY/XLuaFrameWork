@@ -13,6 +13,12 @@ public class PathUtil
     // The output directory
     public static readonly string BundleOutPath = Application.streamingAssetsPath;
 
+    // The bundle resource directory
+    public static string BundleResourcePath
+    {
+        get { return Application.streamingAssetsPath; }
+    }
+
     public static string GetUnityPath(string path)
     {
         if (string.IsNullOrEmpty(path))

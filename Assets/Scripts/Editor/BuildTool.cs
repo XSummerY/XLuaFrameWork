@@ -45,7 +45,7 @@ public class BuildTool : Editor
             assetBundleBuilds.Add(assetBundle);
 
             List<string> dependenceInfo = GetDependence(assetName);
-            string bundleInfo = assetName + "|" + bundleName;
+            string bundleInfo = assetName + "|" + bundleName+".ab";
 
             if(dependenceInfo.Count > 0)
             {
