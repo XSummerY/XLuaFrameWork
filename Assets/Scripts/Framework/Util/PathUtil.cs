@@ -16,7 +16,13 @@ public class PathUtil
     // The bundle resource directory
     public static string BundleResourcePath
     {
-        get { return Application.streamingAssetsPath; }
+        get {
+            if (AppConst.GameMode == GameMode.UpdateMode)
+            {
+                return Application.persistentDataPath;
+            }    
+            return Application.streamingAssetsPath; 
+        }
     }
 
     public static string GetUnityPath(string path)
