@@ -13,6 +13,12 @@ public class PathUtil
     // The output directory
     public static readonly string BundleOutPath = Application.streamingAssetsPath;
 
+    // The readonly directory
+    public static readonly string ReadonlyPath = Application.streamingAssetsPath;
+
+    // The read and write directory
+    public static readonly string ReadWritePath = Application.persistentDataPath;
+
     // The bundle resource directory
     public static string BundleResourcePath
     {
