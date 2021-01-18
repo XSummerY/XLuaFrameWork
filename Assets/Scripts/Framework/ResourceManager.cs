@@ -10,7 +10,7 @@ public class ResourceManager : MonoBehaviour
     private void Start()
     {
         this.ParseVersionFile();
-        this.LoadAsset("Assets/BuildResources/UI/Perfab/TestButton.prefab",OnComplete);
+        LoadUI("TestButton", OnComplete);
     }
 
     private void OnComplete(UObject obj)
@@ -79,8 +79,33 @@ public class ResourceManager : MonoBehaviour
         action?.Invoke(bundleRequest?.asset);
     }
 
-    public void LoadAsset(string assetName,Action<UObject> action)
+    private void LoadAsset(string assetName,Action<UObject> action)
     {
-        StartCoroutine(LoadBundleAsync(assetName)) ;
+        StartCoroutine(LoadBundleAsync(assetName,action)) ;
+    }
+
+    public void LoadUI(string assetName,Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetUIPath(assetName), action);
+    }
+    public void LoadSound(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetSoundPath(assetName), action);
+    }
+    public void LoadMusic(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetMusicPath(assetName), action);
+    }
+    public void LoadScene(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetScenePath(assetName), action);
+    }
+    public void LoadSprite(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetSpritePath(assetName), action);
+    }
+    public void LoadEffect(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetEffectPath(assetName), action);
     }
 }

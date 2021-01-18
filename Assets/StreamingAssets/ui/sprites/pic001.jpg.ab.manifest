@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 3672677917
+CRC: 1393972133
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -14,5 +14,5 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/BuildResources/UI/Sprite/pic001.jpg
+- Assets/BuildResources/UI/Sprites/pic001.jpg
 Dependencies: []

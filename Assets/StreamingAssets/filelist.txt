@@ -1,2 +1,2 @@
-Assets/BuildResources/UI/Perfab/TestButton.prefab|ui/perfab/testbutton.prefab.ab|Assets/BuildResources/UI/Sprite/pic001.jpg
-Assets/BuildResources/UI/Sprite/pic001.jpg|ui/sprite/pic001.jpg.ab
+Assets/BuildResources/UI/Prefabs/TestButton.prefab|ui/prefabs/testbutton.prefab.ab|Assets/BuildResources/UI/Sprites/pic001.jpg
+Assets/BuildResources/UI/Sprites/pic001.jpg|ui/sprites/pic001.jpg.ab

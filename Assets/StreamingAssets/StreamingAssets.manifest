@@ -1,11 +1,11 @@
 ManifestFileVersion: 0
-CRC: 3038935823
+CRC: 2185671353
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: ui/perfab/testbutton.prefab.ab
+      Name: ui/prefabs/testbutton.prefab.ab
       Dependencies:
-        Dependency_0: ui/sprite/pic001.jpg.ab
+        Dependency_0: ui/sprites/pic001.jpg.ab
     Info_1:
-      Name: ui/sprite/pic001.jpg.ab
+      Name: ui/sprites/pic001.jpg.ab
       Dependencies: {}

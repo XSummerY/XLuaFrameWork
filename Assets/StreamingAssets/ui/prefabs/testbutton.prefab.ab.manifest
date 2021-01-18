@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2671777582
+CRC: 889566218
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8388242f37613272440b0467775eba45
+    Hash: da8a9f8ebb9a1b91a6454bdf92c03c14
   TypeTreeHash:
     serializedVersion: 2
     Hash: 41c7a6fefc0df9dfe9532f6e29eeaab4
@@ -34,6 +34,6 @@ ClassTypes:
 - Class: 224
   Script: {instanceID: 0}
 Assets:
-- Assets/BuildResources/UI/Perfab/TestButton.prefab
+- Assets/BuildResources/UI/Prefabs/TestButton.prefab
 Dependencies:
-- I:/XLuaFramework/Assets/StreamingAssets/ui/sprite/pic001.jpg.ab
+- I:/XLuaFramework/Assets/StreamingAssets/ui/sprites/pic001.jpg.ab
