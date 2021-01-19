@@ -7,20 +7,6 @@ using UObject = UnityEngine.Object;
 
 public class ResourceManager : MonoBehaviour
 {
-    private void Start()
-    {
-        this.ParseVersionFile();
-        LoadUI("TestButton", OnComplete);
-    }
-
-    private void OnComplete(UObject obj)
-    {
-        GameObject go = Instantiate(obj) as GameObject;
-        go.transform.SetParent(this.transform);
-        go.SetActive(true);
-        go.transform.localPosition = Vector3.zero;
-    }
-
     internal class BundleInfo
     {
         public string AssetsName;
@@ -29,10 +15,13 @@ public class ResourceManager : MonoBehaviour
     }
     // BundleInfo 的集合
     private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
+
+
+    
     /// <summary>
     /// 解析版本文件
     /// </summary>
-    private void ParseVersionFile()
+    public void ParseVersionFile()
     {
         // 获得版本文件的路径
         string url = Path.Combine(PathUtil.BundleResourcePath, AppConst.FileListName);
@@ -55,42 +44,52 @@ public class ResourceManager : MonoBehaviour
 
     IEnumerator LoadBundleAsync(string assetName,Action<UObject> action=null)
     {
-        string bundleName = m_BundleInfos[assetName].BundleName;
-        string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
-        List<string> dependences = m_BundleInfos[assetName].Dependences;
-        if (dependences != null && dependences.Count > 0)
+        
+        if (m_BundleInfos.ContainsKey(assetName))
         {
-            for(int i = 0; i < dependences.Count; ++i)
+            string bundleName = m_BundleInfos[assetName].BundleName;
+            string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
+            List<string> dependences = m_BundleInfos[assetName].Dependences;
+            if (dependences != null && dependences.Count > 0)
             {
-                yield return LoadBundleAsync(dependences[i]);
+                for (int i = 0; i < dependences.Count; ++i)
+                {
+                    yield return LoadBundleAsync(dependences[i]);
+                }
             }
+
+            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+            yield return request;
+
+            AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assetName);
+            yield return bundleRequest;
+
+            /*if (action != null && bundleRequest != null)
+            {
+                action.Invoke(bundleRequest.asset);
+            }*/
+            action?.Invoke(bundleRequest?.asset);
         }
-
-        AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-        yield return request;
- 
-        AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assetName);
-        yield return bundleRequest;
-
-        /*if (action != null && bundleRequest != null)
+        else
         {
-            action.Invoke(bundleRequest.asset);
-        }*/
-        action?.Invoke(bundleRequest?.asset);
+            Debug.LogError("缺少文件: "+assetName);
+        }
     }
     /// <summary>
     /// 编辑器环境下加载资源
     /// </summary>
     /// <param name="assetName"></param>
     /// <param name="action"></param>
-    void EditorLoadAsset(string assetName,Action<UObject> action = null)
+    void EditorLoadAsset(string assetName, Action<UObject> action = null)
     {
+#if UNITY_EDITOR
         UObject obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetName, typeof(UObject));
         if (obj == null)
         {
             Debug.LogError("assets name is not exist: " + assetName);
         }
         action?.Invoke(obj);
+#endif
     }
 
     private void LoadAsset(string assetName,Action<UObject> action)
