@@ -1,2 +1,3 @@
+Assets/BuildResources/Lua/test.bytes|lua/test.bytes.ab
 Assets/BuildResources/UI/Prefabs/TestButton.prefab|ui/prefabs/testbutton.prefab.ab|Assets/BuildResources/UI/Sprites/pic001.jpg
 Assets/BuildResources/UI/Sprites/pic001.jpg|ui/sprites/pic001.jpg.ab

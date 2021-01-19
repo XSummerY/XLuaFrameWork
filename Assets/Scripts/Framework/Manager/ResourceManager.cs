@@ -39,6 +39,11 @@ public class ResourceManager : MonoBehaviour
                 bundleInfo.Dependences.Add(info[j]);
             }
             m_BundleInfos.Add(bundleInfo.AssetsName, bundleInfo);
+            // 提取Lua脚本
+            if (info[0].IndexOf("Lua") > 0)
+            {
+                Manager.Lua.LuaNames.Add(info[0]);
+            }
         }
     }
 
@@ -80,26 +85,30 @@ public class ResourceManager : MonoBehaviour
     /// </summary>
     /// <param name="assetName"></param>
     /// <param name="action"></param>
+#if UNITY_EDITOR
     void EditorLoadAsset(string assetName, Action<UObject> action = null)
     {
-#if UNITY_EDITOR
+
         UObject obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetName, typeof(UObject));
         if (obj == null)
         {
             Debug.LogError("assets name is not exist: " + assetName);
         }
         action?.Invoke(obj);
-#endif
+
     }
+#endif
 
     private void LoadAsset(string assetName,Action<UObject> action)
     {
+#if UNITY_EDITOR
         if (AppConst.GameMode == GameMode.EditorMode)
         {
             Debug.Log("EditorMode");
             EditorLoadAsset(assetName, action);
         }
         else
+#endif
         {
             Debug.Log("PackageMode");
             StartCoroutine(LoadBundleAsync(assetName, action));
@@ -131,4 +140,10 @@ public class ResourceManager : MonoBehaviour
     {
         this.LoadAsset(PathUtil.GetEffectPath(assetName), action);
     }
+
+    public void LoadLua(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(assetName, action);
+    }
+
 }

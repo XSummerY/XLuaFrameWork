@@ -8,6 +8,14 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         AppConst.GameMode = this.GameMode;
+        Manager.Resource.ParseVersionFile();
+        Manager.Lua.Init(
+            () =>
+            {
+
+                Manager.Lua.RunLua("test");
+            }
+            );
         DontDestroyOnLoad(this);
     }
 

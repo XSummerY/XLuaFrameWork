@@ -19,6 +19,9 @@ public class PathUtil
     // The read and write directory
     public static readonly string ReadWritePath = Application.persistentDataPath;
 
+    // The Lua scripts directory
+    public static readonly string LuaPath = "Assets/BuildResources/Lua/";
+
     // The bundle resource directory
     public static string BundleResourcePath
     {

@@ -1,11 +1,14 @@
 ManifestFileVersion: 0
-CRC: 2185671353
+CRC: 120600711
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
+      Name: lua/test.bytes.ab
+      Dependencies: {}
+    Info_1:
       Name: ui/prefabs/testbutton.prefab.ab
       Dependencies:
         Dependency_0: ui/sprites/pic001.jpg.ab
-    Info_1:
+    Info_2:
       Name: ui/sprites/pic001.jpg.ab
       Dependencies: {}
