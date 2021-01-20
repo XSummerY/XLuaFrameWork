@@ -1,6 +1,10 @@
 Manager = CS.Manager
 PathUtil = CS.PathUtil
 Vector3 = CS.UnityEngine.Vector3
+Input = CS.UnityEngine.Input
+KeyCode = CS.UnityEngine.KeyCode
+Time = CS.UnityEngine.Time
+
 local UIGroups = {
 	"Main",
 	"Windows",
@@ -14,8 +18,8 @@ Manager.Entity:SetEntityGroup(EntityGroups)
 function test()
     print("Read Lua script successfully!")
     Manager.UI:OpenUI("TestButton","Main","UI.UITest")
-    Manager.UI:OpenUI("LayerTest1","Windows","UI.UITest")
-    Manager.Entity:ShowEntity(PathUtil.GetModelPath("Player"),"Player","Entity.entityTest")
+    -- Manager.UI:OpenUI("LayerTest1","Windows","UI.UITest")
+    
 end
 
 test()

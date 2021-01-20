@@ -84,7 +84,7 @@ public class PathUtil
     }
     public static string GetScenePath(string name)
     {
-        return string.Format("Assets/BuildResources/Scenes/{0}.unity", name);
+        return string.Format("Assets/BuildResources/Scenes/Scenes/{0}.unity", name);
     }
     public static string GetSpritePath(string name)
     {

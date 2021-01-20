@@ -40,11 +40,20 @@ public class Manager : MonoBehaviour
         }
     }
 
+    private static ScenesManager _scene;
+    public static ScenesManager Scene
+    {
+        get
+        {
+            return _scene;
+        }
+    }
     private void Awake()
     {
         _resource = gameObject.AddComponent<ResourceManager>();
         _lua = gameObject.AddComponent<LuaManager>();
         _ui = gameObject.AddComponent<UIManager>();
         _entity = gameObject.AddComponent<EntityManager>();
+        _scene = gameObject.AddComponent<ScenesManager>();
     }
 }
