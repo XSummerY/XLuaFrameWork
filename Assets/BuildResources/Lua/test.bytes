@@ -1,5 +1,7 @@
+Manager = CS.Manager
 function test()
     print("Read Lua script successfully!")
+    Manager.UI:OpenUI("TestButton","UI.UITest")
 end
 
 test()
