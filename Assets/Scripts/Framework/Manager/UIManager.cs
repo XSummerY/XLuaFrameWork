@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
     {
         if (!m_UIGroups.ContainsKey(groupName))
         {
-            Debug.LogError("Group \"" + groupName + "\" is not exisit");
+            Debug.LogError("UIGroup \"" + groupName + "\" is not exisit");
         }
         return m_UIGroups[groupName].transform;
     }

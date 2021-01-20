@@ -31,10 +31,20 @@ public class Manager : MonoBehaviour
         }
     }
 
+    private static EntityManager _entity;
+    public static EntityManager Entity
+    {
+        get
+        {
+            return _entity;
+        }
+    }
+
     private void Awake()
     {
         _resource = gameObject.AddComponent<ResourceManager>();
         _lua = gameObject.AddComponent<LuaManager>();
         _ui = gameObject.AddComponent<UIManager>();
+        _entity = gameObject.AddComponent<EntityManager>();
     }
 }

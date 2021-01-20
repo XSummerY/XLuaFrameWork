@@ -1,0 +1,16 @@
+function Update()
+    print("Player Update")
+end
+
+function OnInit()
+    print("Player OnInit")
+end
+
+function OnShow()
+    print("Player OnShow")
+    self.transform.localPosition = Vector3(1,1,2)
+end
+
+function OnHide()
+    print("Player OnHide")
+end

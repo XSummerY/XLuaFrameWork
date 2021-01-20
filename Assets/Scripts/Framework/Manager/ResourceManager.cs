@@ -140,10 +140,17 @@ public class ResourceManager : MonoBehaviour
     {
         this.LoadAsset(PathUtil.GetEffectPath(assetName), action);
     }
-
+    public void LoadModel(string assetName, Action<UObject> action = null)
+    {
+        this.LoadAsset(PathUtil.GetModelPath(assetName), action);
+    }
     public void LoadLua(string assetName, Action<UObject> action = null)
     {
         this.LoadAsset(assetName, action);
     }
 
+    public void LoadPrefab(string assetName,Action<UObject> action = null)
+    {
+        this.LoadAsset(assetName, action);
+    }
 }
