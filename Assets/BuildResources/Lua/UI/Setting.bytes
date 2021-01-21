@@ -1,0 +1,20 @@
+function Update()
+
+end
+
+function OnInit()
+
+end
+
+function OnOpen()
+	local btn_setting = self.transform.gameObject:GetComponent("Button")
+	btn_setting.onClick:AddListener(
+		function()
+			Manager.UI:OpenUI("SettingWindow","Windows","UI.Setting_Window")
+		end
+	)
+end
+
+function OnClose()
+
+end

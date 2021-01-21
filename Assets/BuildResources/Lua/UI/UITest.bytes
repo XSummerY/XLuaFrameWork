@@ -8,7 +8,7 @@ end
 
 function OnOpen()
     print("OnOpen")
-    Manager.Scene:LoadScene("Test","Scene.test001")
+    -- Manager.Scene:LoadScene("Test","Scene.test001")
 end
 
 function OnClose()

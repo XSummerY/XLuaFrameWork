@@ -1,0 +1,59 @@
+function Update()
+
+end
+
+function OnInit()
+
+end
+
+function OnOpen()
+	local setting_plane = self.transform:Find("SettingPlane")
+	local music_setting = setting_plane.transform:Find("MusicSetting")
+	local sound_setting = setting_plane.transform:Find("SoundSetting")
+	local toggle_music = music_setting.transform:Find("Toggle"):GetComponent("Toggle")
+	local slider_music_volume = music_setting.transform:Find("Slider"):GetComponent("Slider")
+	local toggle_sound = sound_setting.transform:Find("Toggle"):GetComponent("Toggle")
+	local slider_sound_volume = sound_setting.transform:Find("Slider"):GetComponent("Slider")
+	slider_music_volume.value = Manager.Audio:GetMusicVolume()
+	slider_sound_volume.value = Manager.Audio:GetSoundVolume()
+	toggle_music.onValueChanged:AddListener(
+		function()
+			Manager.Audio:PlaySound("click.wav")
+			if toggle_music.isOn then
+				print("toggle_music isOn")
+				-- Manager.Audio:SetMusicVolume(1)
+				slider_music_volume.value = 1			
+			else
+				-- Manager.Audio:SetMusicVolume(0)
+				print("toggle_music isOff")
+				slider_music_volume.value = 0
+			end
+		end
+	)
+	slider_music_volume.onValueChanged:AddListener(
+		function(volume)
+			Manager.Audio:SetMusicVolume(volume)
+		end
+	)
+	toggle_sound.onValueChanged:AddListener(
+		function()
+			
+			if toggle_sound.isOn then
+				
+				slider_sound_volume.value = 1
+				Manager.Audio:PlaySound("click.wav")
+			else
+				slider_sound_volume.value = 0
+			end
+		end
+	)
+	slider_sound_volume.onValueChanged:AddListener(
+		function(volume)
+			Manager.Audio:SetSoundVolume(volume)
+		end
+	)
+end
+
+function OnClose()
+	print("Setting Complete")
+end

@@ -57,4 +57,16 @@ public class UIManager : MonoBehaviour
              uiLogic.OnOpen();          // Start
          });
     }
+
+    public void CloseUI(string uiName,Transform uiTransform)
+    {
+        GameObject go = null;
+        if(m_UI.TryGetValue(uiName,out go))
+        {
+            m_UI.Remove(uiName);
+            UILogic uiLogic = go.GetComponent<UILogic>();
+            uiLogic.Close();
+            GameObject.Destroy(go);
+        }
+    }
 }

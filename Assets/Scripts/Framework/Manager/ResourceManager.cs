@@ -126,10 +126,20 @@ public class ResourceManager : MonoBehaviour
     {
         this.LoadAsset(PathUtil.GetUIPath(assetName), action);
     }
+    /// <summary>
+    /// 加载音效
+    /// </summary>
+    /// <param name="assetName">带后缀的资源名，以适应不同格式的音效</param>
+    /// <param name="action"></param>
     public void LoadSound(string assetName, Action<UObject> action = null)
     {
         this.LoadAsset(PathUtil.GetSoundPath(assetName), action);
     }
+    /// <summary>
+    /// 加载音乐资源
+    /// </summary>
+    /// <param name="assetName">带后缀的资源名，以适应不同格式的音乐</param>
+    /// <param name="action"></param>
     public void LoadMusic(string assetName, Action<UObject> action = null)
     {
         this.LoadAsset(PathUtil.GetMusicPath(assetName), action);

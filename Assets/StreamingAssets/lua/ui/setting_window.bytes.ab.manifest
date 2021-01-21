@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 376657912
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0ca1e9f4c7bfbd22c6427844710132d9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+Assets:
+- Assets/BuildResources/Lua/UI/Setting_Window.bytes
+Dependencies: []
