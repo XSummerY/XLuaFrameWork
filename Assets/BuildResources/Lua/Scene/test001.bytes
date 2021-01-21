@@ -16,8 +16,8 @@ end
 
 function OnEnter()
     print("OnEnter")
-    Manager.Scene:LoadScene("Test002","Scene.test002")
-    Manager.Scene:SetActive(self.sceneName)
+    Manager.Scene:ChangeScene("Test002","Scene.test002")
+    -- Manager.Scene:SetActive(self.sceneName)
 end
 
 function OnQuit()
