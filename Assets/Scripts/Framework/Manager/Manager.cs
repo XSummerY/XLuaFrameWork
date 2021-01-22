@@ -58,6 +58,15 @@ public class Manager : MonoBehaviour
         }
     }
 
+    private static EventManager _event;
+    public static EventManager Event
+    {
+        get
+        {
+            return _event;
+        }
+    }
+
     private void Awake()
     {
         _resource = gameObject.AddComponent<ResourceManager>();
@@ -66,5 +75,6 @@ public class Manager : MonoBehaviour
         _entity = gameObject.AddComponent<EntityManager>();
         _scene = gameObject.AddComponent<ScenesManager>();
         _audio = gameObject.AddComponent<AudioManager>();
+        _event = gameObject.AddComponent<EventManager>();
     }
 }

@@ -10,13 +10,19 @@ function OnOpen()
 	local setting_plane = self.transform:Find("SettingPlane")
 	local music_setting = setting_plane.transform:Find("MusicSetting")
 	local sound_setting = setting_plane.transform:Find("SoundSetting")
+	local close_button = setting_plane.transform:Find("Button"):GetComponent("Button")
 	local toggle_music = music_setting.transform:Find("Toggle"):GetComponent("Toggle")
 	local slider_music_volume = music_setting.transform:Find("Slider"):GetComponent("Slider")
 	local toggle_sound = sound_setting.transform:Find("Toggle"):GetComponent("Toggle")
 	local slider_sound_volume = sound_setting.transform:Find("Slider"):GetComponent("Slider")
 	slider_music_volume.value = Manager.Audio:GetMusicVolume()
 	slider_sound_volume.value = Manager.Audio:GetSoundVolume()
-	toggle_music.onValueChanged:AddListener(
+	close_button:OnClickSet(
+		function()
+			Manager.UI:CloseUI("SettingWindow",self.transform)
+		end
+	)
+	toggle_music:OnValueChangedSet(
 		function()
 			Manager.Audio:PlaySound("click.wav")
 			if toggle_music.isOn then
@@ -30,12 +36,12 @@ function OnOpen()
 			end
 		end
 	)
-	slider_music_volume.onValueChanged:AddListener(
+	slider_music_volume:OnValueChangedSet(
 		function(volume)
 			Manager.Audio:SetMusicVolume(volume)
 		end
 	)
-	toggle_sound.onValueChanged:AddListener(
+	toggle_sound:OnValueChangedSet(
 		function()
 			
 			if toggle_sound.isOn then
@@ -47,7 +53,7 @@ function OnOpen()
 			end
 		end
 	)
-	slider_sound_volume.onValueChanged:AddListener(
+	slider_sound_volume:OnValueChangedSet(
 		function(volume)
 			Manager.Audio:SetSoundVolume(volume)
 		end
@@ -55,5 +61,5 @@ function OnOpen()
 end
 
 function OnClose()
-	print("Setting Complete")
+	print("awsl")
 end

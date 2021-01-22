@@ -22,6 +22,9 @@ namespace XLua.CSObjectWrap
         static void wrapInit0(LuaEnv luaenv, ObjectTranslator translator)
         {
         
+            translator.DelayWrapLoader(typeof(UnityEX), UnityEXWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(object), SystemObjectWrap.__Register);
         
         
@@ -202,11 +205,50 @@ namespace XLua
 	internal partial class InternalGlobals
     {
 	    
+		delegate void __GEN_DELEGATE0( UnityEngine.UI.Button button,  object callback);
+		
+		delegate void __GEN_DELEGATE1( UnityEngine.UI.Slider slider,  object callback);
+		
+		delegate void __GEN_DELEGATE2( UnityEngine.UI.Toggle toggle,  object callback);
+		
 	    static InternalGlobals()
 		{
 		    extensionMethodMap = new Dictionary<Type, IEnumerable<MethodInfo>>()
 			{
 			    
+				{typeof(UnityEngine.UI.Button), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE0(UnityEX.OnClickSet)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(UnityEngine.UI.Slider), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE1(UnityEX.OnValueChangedSet)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
+				{typeof(UnityEngine.UI.Toggle), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE2(UnityEX.OnValueChangedSet)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
 			};
 			
 			genTryArrayGetPtr = StaticLuaCallbacks.__tryArrayGet;
