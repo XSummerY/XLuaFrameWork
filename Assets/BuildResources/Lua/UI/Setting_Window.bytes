@@ -19,7 +19,7 @@ function OnOpen()
 	slider_sound_volume.value = Manager.Audio:GetSoundVolume()
 	close_button:OnClickSet(
 		function()
-			Manager.UI:CloseUI("SettingWindow",self.transform)
+			self.transform:GetComponent("UILogic"):Close()
 		end
 	)
 	toggle_music:OnValueChangedSet(
@@ -28,7 +28,7 @@ function OnOpen()
 			if toggle_music.isOn then
 				print("toggle_music isOn")
 				-- Manager.Audio:SetMusicVolume(1)
-				slider_music_volume.value = 1			
+				slider_music_volume.value = slider_music_volume.value == 0 and 1 or Manager.Audio:GetMusicVolume()			
 			else
 				-- Manager.Audio:SetMusicVolume(0)
 				print("toggle_music isOff")
@@ -46,7 +46,7 @@ function OnOpen()
 			
 			if toggle_sound.isOn then
 				
-				slider_sound_volume.value = 1
+				slider_sound_volume.value = slider_sound_volume.value == 0 and 1 or Manager.Audio:GetSoundVolume()
 				Manager.Audio:PlaySound("click.wav")
 			else
 				slider_sound_volume.value = 0

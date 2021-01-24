@@ -67,6 +67,14 @@ public class Manager : MonoBehaviour
         }
     }
 
+    private static PoolManager _pool;
+    public static PoolManager Pool
+    {
+        get
+        {
+            return _pool;
+        }
+    }
     private void Awake()
     {
         _resource = gameObject.AddComponent<ResourceManager>();
@@ -76,5 +84,6 @@ public class Manager : MonoBehaviour
         _scene = gameObject.AddComponent<ScenesManager>();
         _audio = gameObject.AddComponent<AudioManager>();
         _event = gameObject.AddComponent<EventManager>();
+        _pool = gameObject.AddComponent<PoolManager>();
     }
 }

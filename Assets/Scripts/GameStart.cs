@@ -24,6 +24,9 @@ public class GameStart : MonoBehaviour
     void OnLuaInit(object args)
     {
         Manager.Lua.RunLua("test");
+        Manager.Pool.CreateGameObjectPool("UI", 100);
+        Manager.Pool.CreateGameObjectPool("AssetBundle", 300);
+        Manager.Pool.CreateAssetPool("Effect", 120);
     }
 
     public void OnApplicationQuit()

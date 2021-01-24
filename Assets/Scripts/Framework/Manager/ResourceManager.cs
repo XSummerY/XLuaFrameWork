@@ -15,8 +15,8 @@ public class ResourceManager : MonoBehaviour
     }
     // BundleInfo 的集合
     private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
-
-
+    // 已经加载的bundle
+    private Dictionary<string, AssetBundle> m_AssetBundles = new Dictionary<string, AssetBundle>();
     
     /// <summary>
     /// 解析版本文件
@@ -55,16 +55,23 @@ public class ResourceManager : MonoBehaviour
             string bundleName = m_BundleInfos[assetName].BundleName;
             string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
             List<string> dependences = m_BundleInfos[assetName].Dependences;
-            if (dependences != null && dependences.Count > 0)
+            AssetBundle bundle = GetBundle(bundleName);
+            if (bundle == null)
             {
-                for (int i = 0; i < dependences.Count; ++i)
+                if (dependences != null && dependences.Count > 0)
                 {
-                    yield return LoadBundleAsync(dependences[i]);
+                    for (int i = 0; i < dependences.Count; ++i)
+                    {
+                        yield return LoadBundleAsync(dependences[i]);
+                    }
                 }
-            }
 
-            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-            yield return request;
+                AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+                yield return request;
+                bundle = request.assetBundle;
+                m_AssetBundles.Add(bundleName, bundle);
+            }
+            
 
             if (assetName.EndsWith(".unity"))
             {
@@ -72,7 +79,7 @@ public class ResourceManager : MonoBehaviour
                 yield break;
             }
 
-            AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assetName);
+            AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assetName);
             yield return bundleRequest;
 
             /*if (action != null && bundleRequest != null)
@@ -86,6 +93,14 @@ public class ResourceManager : MonoBehaviour
             Debug.LogError("缺少文件: "+assetName);
         }
     }
+
+    AssetBundle GetBundle(string bundleName)
+    {
+        AssetBundle bundle = null;
+        m_AssetBundles.TryGetValue(bundleName, out bundle);
+        return bundle;
+    }
+
     /// <summary>
     /// 编辑器环境下加载资源
     /// </summary>
@@ -168,5 +183,10 @@ public class ResourceManager : MonoBehaviour
     public void LoadPrefab(string assetName,Action<UObject> action = null)
     {
         this.LoadAsset(assetName, action);
+    }
+
+    public void UnloadBundle(string bundleName)
+    {
+
     }
 }
