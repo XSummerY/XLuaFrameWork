@@ -13,11 +13,23 @@ public class ResourceManager : MonoBehaviour
         public string BundleName;
         public List<string> Dependences;
     }
+
+    internal class BundleData
+    {
+        public AssetBundle bundle;
+        public int Count;
+        public BundleData(AssetBundle ab)
+        {
+            bundle = ab;
+            Count = 1;
+        }
+    }
     // BundleInfo 的集合
     private Dictionary<string, BundleInfo> m_BundleInfos = new Dictionary<string, BundleInfo>();
     // 已经加载的bundle
-    private Dictionary<string, AssetBundle> m_AssetBundles = new Dictionary<string, AssetBundle>();
-    
+    // private Dictionary<string, AssetBundle> m_AssetBundles = new Dictionary<string, AssetBundle>();
+    private Dictionary<string, BundleData> m_AssetBundles = new Dictionary<string, BundleData>();
+
     /// <summary>
     /// 解析版本文件
     /// </summary>
@@ -55,31 +67,45 @@ public class ResourceManager : MonoBehaviour
             string bundleName = m_BundleInfos[assetName].BundleName;
             string bundlePath = Path.Combine(PathUtil.BundleResourcePath, bundleName);
             List<string> dependences = m_BundleInfos[assetName].Dependences;
-            AssetBundle bundle = GetBundle(bundleName);
+            BundleData bundle = GetBundle(bundleName);
             if (bundle == null)
             {
-                if (dependences != null && dependences.Count > 0)
+                UObject obj = Manager.Pool.Spawn("AssetBundle", bundleName);
+                if (obj != null)
                 {
-                    for (int i = 0; i < dependences.Count; ++i)
-                    {
-                        yield return LoadBundleAsync(dependences[i]);
-                    }
+                    AssetBundle ab = obj as AssetBundle;
+                    bundle = new BundleData(ab);
                 }
-
-                AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-                yield return request;
-                bundle = request.assetBundle;
+                else
+                {
+                    AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+                    yield return request;
+                    bundle = new BundleData(request.assetBundle);
+                }
                 m_AssetBundles.Add(bundleName, bundle);
             }
-            
 
+            if (dependences != null && dependences.Count > 0)
+            {
+                for (int i = 0; i < dependences.Count; ++i)
+                {
+                    yield return LoadBundleAsync(dependences[i]);
+                }
+            }
+            
             if (assetName.EndsWith(".unity"))
             {
                 action?.Invoke(null);
                 yield break;
             }
 
-            AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assetName);
+            // 当加载的是依赖资源时没有回调，直接退出
+            if (action == null)
+            {
+                yield break;
+            }
+
+            AssetBundleRequest bundleRequest = bundle.bundle.LoadAssetAsync(assetName);
             yield return bundleRequest;
 
             /*if (action != null && bundleRequest != null)
@@ -94,11 +120,47 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    AssetBundle GetBundle(string bundleName)
+    BundleData GetBundle(string bundleName)
     {
-        AssetBundle bundle = null;
-        m_AssetBundles.TryGetValue(bundleName, out bundle);
+        BundleData bundle = null;
+        if(m_AssetBundles.TryGetValue(bundleName, out bundle))
+        {
+            ++(bundle.Count);
+        }
         return bundle;
+    }
+
+    private void DeleteOneBundleCount(string bundleName)
+    {
+        if(m_AssetBundles.TryGetValue(bundleName,out BundleData bundle))
+        {
+            if (bundle.Count > 0)
+            {
+                --(bundle.Count);
+                Debug.Log("bundle引用计数: " + bundleName + " count: " + bundle.Count);
+            }
+            if (bundle.Count <= 0)
+            {
+                Debug.Log("放入bundle对象池: " + bundleName);
+                Manager.Pool.UnSpawn("AssetBundle", bundleName, bundle.bundle);
+                m_AssetBundles.Remove(bundleName);
+            }
+        }
+    }
+
+    public void DeleteBundleCount(string assetName)
+    {
+        string bundleName = m_BundleInfos[assetName].BundleName;
+        DeleteOneBundleCount(bundleName);
+        List<string> dependences = m_BundleInfos[assetName].Dependences;
+        if (dependences != null)
+        {
+            foreach(string dependence in dependences)
+            {
+                string name = m_BundleInfos[dependence].BundleName;
+                DeleteOneBundleCount(name);
+            }
+        }
     }
 
     /// <summary>
@@ -185,8 +247,9 @@ public class ResourceManager : MonoBehaviour
         this.LoadAsset(assetName, action);
     }
 
-    public void UnloadBundle(string bundleName)
+    public void UnloadBundle(UObject obj)
     {
-
+        AssetBundle ab = obj as AssetBundle;
+        ab.Unload(true);
     }
 }
